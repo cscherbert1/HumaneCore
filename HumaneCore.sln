@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumaneCore", "HumaneCore\Hu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumaneCore.Data", "HumaneCore.Data\HumaneCore.Data.csproj", "{C74372D3-9476-4473-A1AA-4BF3995D0000}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumaneCore.Service", "HumaneCore.Service\HumaneCore.Service.csproj", "{98412FB4-A153-48BD-89F3-73F8829C858E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C74372D3-9476-4473-A1AA-4BF3995D0000}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C74372D3-9476-4473-A1AA-4BF3995D0000}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C74372D3-9476-4473-A1AA-4BF3995D0000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98412FB4-A153-48BD-89F3-73F8829C858E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98412FB4-A153-48BD-89F3-73F8829C858E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98412FB4-A153-48BD-89F3-73F8829C858E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98412FB4-A153-48BD-89F3-73F8829C858E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

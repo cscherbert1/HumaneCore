@@ -10,5 +10,6 @@ namespace HumaneCore.Data.Models
         public string CommonName { get; set; }
 
         public virtual Breed Breed { get; set; }
+        public IEnumerable<Animal>Animals { get; set; }
     }
 }

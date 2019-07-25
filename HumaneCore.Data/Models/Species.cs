@@ -8,6 +8,7 @@ namespace HumaneCore.Data.Models
     {
         public int Id { get; set; }
         public string CommonName { get; set; }
+        public double AdoptionFee { get; set; }
 
         public virtual Breed Breed { get; set; }
         public IEnumerable<Animal>Animals { get; set; }

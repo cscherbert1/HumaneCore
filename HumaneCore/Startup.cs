@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using HumaneCore.Data;
+using HumaneCore.Data.Interfaces;
+using HumaneCore.Service;
 
 namespace HumaneCore
 {
@@ -29,6 +31,8 @@ namespace HumaneCore
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            services.AddScoped<IAnimal, AnimalService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(

@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HumaneCore.Data\HumaneCore.Data.csproj" />
+    <ProjectReference Include="..\HumaneCore.Service\HumaneCore.Service.csproj" />
   </ItemGroup>
 
 </Project>

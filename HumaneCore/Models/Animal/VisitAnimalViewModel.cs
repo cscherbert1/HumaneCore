@@ -18,7 +18,7 @@ namespace HumaneCore.Models.Animal
 
         public virtual Species Species { get; set; }
         public virtual Color Color { get; set; }
-        public virtual Restriction Restriction { get; set; }
+        public IEnumerable<AnimalRestriction> AnimalRestrictions { get; set; }
         public IEnumerable<Media> Media { get; set; }
     }
 }

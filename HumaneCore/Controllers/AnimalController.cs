@@ -28,6 +28,7 @@ namespace HumaneCore.Controllers
                     Age = animal.Age,
                     Gender = animal.Gender,
                     Species = animal.Species,
+                    Breed = animal.Breed,
                     Color = animal.Color,
                     AnimalRestrictions = animal.AnimalRestrictions,
                     Media = animal.Media

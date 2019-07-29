@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using HumaneCore.Data;
 using HumaneCore.Data.Interfaces;
 using HumaneCore.Service;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace HumaneCore
 {
@@ -34,7 +36,6 @@ namespace HumaneCore
 
             services.AddRouting();
             services.AddScoped<IAnimal, AnimalService>();
-
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
@@ -66,6 +67,15 @@ namespace HumaneCore
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+
+            app.UseStaticFiles(); // For the wwwroot folder
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "Media")),
+                RequestPath = "/Media"
+            });
 
             app.UseMvc(routes =>
             {

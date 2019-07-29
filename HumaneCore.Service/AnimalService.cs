@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HumaneCore.Data;
 using HumaneCore.Data.Interfaces;
@@ -20,7 +21,7 @@ namespace HumaneCore.Service
             throw new NotImplementedException();
         }
 
-        public Task Delete(Guid id)
+        public Task Delete(long id)
         {
             throw new NotImplementedException();
         }
@@ -33,9 +34,14 @@ namespace HumaneCore.Service
                 .Include(a => a.Color);
         }
 
-        public Animal GetById(Guid Id)
+        public Animal GetById(long Id)
         {
-            return _context.Animals.Find(Id);
+            return _context.Animals.Where(a => a.Id == Id)
+                .Include(a => a.Species).ThenInclude(a => a.Breeds)
+                .Include(a => a.AnimalRestrictions)
+                .Include(a => a.Color)
+                .Include(a => a.Media)
+                .FirstOrDefault();
         }
 
         public IEnumerable<Animal> GetBySpecies(int speciesId)
@@ -48,22 +54,22 @@ namespace HumaneCore.Service
             throw new NotImplementedException();
         }
 
-        public Task UpdateAge(Guid id, int newAge)
+        public Task UpdateAge(long id, int newAge)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateBio(Guid id, string newBio)
+        public Task UpdateBio(long id, string newBio)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateName(Guid id, string newName)
+        public Task UpdateName(long id, string newName)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateSpayNeut(Guid id, bool newSpayedNeutered)
+        public Task UpdateSpayNeut(long id, bool newSpayedNeutered)
         {
             throw new NotImplementedException();
         }

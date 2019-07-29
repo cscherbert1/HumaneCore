@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
@@ -36,6 +37,7 @@ namespace HumaneCore
 
             services.AddRouting();
             services.AddScoped<IAnimal, AnimalService>();
+            services.AddScoped<ISpecies, SpeciesService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(

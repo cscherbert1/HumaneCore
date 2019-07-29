@@ -1,0 +1,90 @@
+﻿@model HumaneCore.Models.Animal.AnimalListingViewModel
+
+@{
+    ViewData["Title"] = "Visit";
+}
+
+<h1>@Model.Name</h1>
+<div class="row">
+    <div></div>
+    <div id="imageCarousel" class="carousel slide carouselImage" data-ride="carousel">
+        <div class="carousel-inner">
+            @{
+                if (Model.Media.Count() == 0)
+                {
+                    <div class="carousel-item active">
+                        <img class="d-block w-100 carouselImage" src="~/Media/Images/image_not_available.jpg" alt="Image Not Available">
+                    </div>
+                }
+                else
+                {
+                    foreach (var m in Model.Media)
+                    {
+                        <div class="carousel-item active">
+                            <img class="d-block w-100 carouselImage" src="@m.Location" alt="@m.MediaType.Type of @Model.Name">
+                        </div>
+                    }
+                }
+            }
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <p>@Model.Bio</p>
+    </div>
+    <div class="col-md-4">
+        <dl class="row">
+            <dt class="col-md-4">
+                @Html.DisplayNameFor(model => model.Species)
+            </dt>
+            <dd class="col-md-6">
+                @Html.DisplayFor(model => model.Species.CommonName)
+            </dd>
+            <dt class="col-md-4">
+                @Html.DisplayNameFor(model => model.Breed)
+            </dt>
+            <dd class="col-md-6">
+                @Html.DisplayFor(model => model.Breed.Name)
+            </dd>
+            <dt class="col-md-4">
+                @Html.DisplayNameFor(model => model.Age)
+            </dt>
+            <dd class="col-md-6">
+                @Html.DisplayFor(model => model.Age)
+            </dd>
+            <dt class="col-md-4">
+                @Html.DisplayNameFor(model => model.Gender)
+            </dt>
+            <dd class="col-md-6">
+                @Html.DisplayFor(model => model.Gender)
+            </dd>
+            <dt class="col-md-4">
+                @Html.DisplayNameFor(model => model.IntakeDate)
+            </dt>
+            <dd class="col-md-6">
+                @Html.DisplayFor(model => model.IntakeDate)
+            </dd>
+            <dt class="col-md-4">
+                @Html.DisplayNameFor(model => model.SpayedNeutered)
+            </dt>
+            <dd class="col-md-6">
+                @Html.DisplayFor(model => model.SpayedNeutered)
+            </dd>
+        </dl>
+
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { Id = Model.Id }) |
+    <a asp-action="Index">Back to List</a>
+</div>

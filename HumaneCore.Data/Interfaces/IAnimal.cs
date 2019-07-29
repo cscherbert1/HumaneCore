@@ -13,7 +13,7 @@ namespace HumaneCore.Data.Interfaces
         /// </summary>
         /// <param name="Id"></param>
         /// <returns>An Animal</returns>
-        Animal GetById(Guid Id);
+        Animal GetById(long Id);
         /// <summary>
         /// Gets all animals
         /// </summary>
@@ -37,7 +37,7 @@ namespace HumaneCore.Data.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task Delete(Guid id);
+        Task Delete(long id);
         /// <summary>
         /// Updates all properties of an existing animal
         /// </summary>
@@ -50,27 +50,27 @@ namespace HumaneCore.Data.Interfaces
         /// <param name="id"></param>
         /// <param name="newName"></param>
         /// <returns></returns>
-        Task UpdateName(Guid id, string newName);
+        Task UpdateName(long id, string newName);
         /// <summary>
         /// Updates an animal age
         /// </summary>
         /// <param name="id"></param>
         /// <param name="newAge"></param>
         /// <returns></returns>
-        Task UpdateAge(Guid id, int newAge);
+        Task UpdateAge(long id, int newAge);
         /// <summary>
         /// Updates an animal Bio
         /// </summary>
         /// <param name="id"></param>
         /// <param name="newBio"></param>
         /// <returns></returns>
-        Task UpdateBio(Guid id, string newBio);
+        Task UpdateBio(long id, string newBio);
         /// <summary>
         /// Updates whether an animal has been spayed or neutered
         /// </summary>
         /// <param name="id"></param>
         /// <param name="newSpayedNeutered"></param>
         /// <returns></returns>
-        Task UpdateSpayNeut(Guid id, bool newSpayedNeutered);
+        Task UpdateSpayNeut(long id, bool newSpayedNeutered);
     }
 }

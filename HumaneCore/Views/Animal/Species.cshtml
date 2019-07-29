@@ -1,0 +1,52 @@
+﻿@model HumaneCore.Models.Animal.AnimalSpeciesViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>@string.Concat(Model.Species.CommonName, 's')</h1>
+
+@{
+    var animals = Model.AnimalList.ToArray();
+    for (int i = 0; i < animals.Length; i++)
+    {
+        if (i == 0 || i % 4 == 0)
+        {
+            <div class="row">
+                @for (int j = 0; j <= 3; j++)
+                {
+                    if (i + j < animals.Length)
+                    {
+                        <div class="col-sm-3">
+                            <div class="card bg-light border-dark">
+                                <div class="card-header bg-transparent border-dark">
+                                    @{
+                                        if (animals[i + j].Media.Count() == 0)
+                                        {
+                                            <img class="card-img-top" src="~/Media/Images/image_not_available.jpg" alt="Image Not Available" />
+                                        }
+                                        else
+                                        {
+                                            <img class="card-img-top" src="@animals[i+j].Media.First()" alt="@animals[i+j].Name photo" />
+                                        }
+                                    }
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">@animals[i + j].Name</h5>
+                                    <ul class="card-text animalInfo">
+                                        <li class="noBullet"><strong>Species: </strong>@animals[i + j].Species.CommonName</li>
+                                        <li class="noBullet"><strong>Breed: </strong>@animals[i + j].Breed.Name</li>
+                                        <li class="noBullet"><strong>Gender: </strong>@animals[i + j].Gender</li>
+                                        <li class="noBullet"><strong>Age:</strong> @animals[i + j].Age</li>
+                                    </ul>
+                                    <a class="btn btn-primary" href="/Animal/Visit/@animals[i+j].Id">Visit @animals[i + j].Name!</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            <br />
+        }
+    }
+}

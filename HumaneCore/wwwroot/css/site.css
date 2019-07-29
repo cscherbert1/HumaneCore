@@ -42,8 +42,10 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+
+    padding-top: 70px; 
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
 .footer {
   position: absolute;
@@ -60,4 +62,11 @@ li.noBullet {
 }
 ul.animalInfo{
     padding-left: 20px;
+}
+.carouselImage {
+    display: block;
+    max-height: 400px;
+    width: auto;
+    height: auto;
+    margin: auto;
 }

@@ -4,14 +4,16 @@ using HumaneCore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HumaneCore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190728033526_Re-defined Id of Animal to long from Guid. Recreating database")]
+    partial class RedefinedIdofAnimaltolongfromGuidRecreatingdatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,6 +39,8 @@ namespace HumaneCore.Data.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int?>("RestrictionId");
+
                     b.Property<bool>("SpayedNeutered");
 
                     b.Property<int?>("SpeciesId");
@@ -45,22 +49,11 @@ namespace HumaneCore.Data.Migrations
 
                     b.HasIndex("ColorId");
 
+                    b.HasIndex("RestrictionId");
+
                     b.HasIndex("SpeciesId");
 
                     b.ToTable("Animals");
-                });
-
-            modelBuilder.Entity("HumaneCore.Data.Models.AnimalRestriction", b =>
-                {
-                    b.Property<long>("AnimalId");
-
-                    b.Property<int>("RestrictionId");
-
-                    b.HasKey("AnimalId", "RestrictionId");
-
-                    b.HasIndex("RestrictionId");
-
-                    b.ToTable("AnimalRestriction");
                 });
 
             modelBuilder.Entity("HumaneCore.Data.Models.Breed", b =>
@@ -326,22 +319,13 @@ namespace HumaneCore.Data.Migrations
                         .WithMany()
                         .HasForeignKey("ColorId");
 
+                    b.HasOne("HumaneCore.Data.Models.Restriction", "Restriction")
+                        .WithMany()
+                        .HasForeignKey("RestrictionId");
+
                     b.HasOne("HumaneCore.Data.Models.Species", "Species")
                         .WithMany("Animals")
                         .HasForeignKey("SpeciesId");
-                });
-
-            modelBuilder.Entity("HumaneCore.Data.Models.AnimalRestriction", b =>
-                {
-                    b.HasOne("HumaneCore.Data.Models.Animal", "Animal")
-                        .WithMany("AnimalRestrictions")
-                        .HasForeignKey("AnimalId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("HumaneCore.Data.Models.Restriction", "Restriction")
-                        .WithMany("AnimalRestrictions")
-                        .HasForeignKey("RestrictionId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("HumaneCore.Data.Models.Breed", b =>

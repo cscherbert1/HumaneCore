@@ -23,11 +23,11 @@
                                 <h5 class="card-title">@animals[i + j].Name</h5>
                                 <ul class="card-text">
                                     <li>@animals[i + j].Species.CommonName</li>
-                                    <li>@animals[i + j].Species.Breed.Name</li>
+                                    @*<li>@animals[i + j].Species.Breed.Name</li>*@
                                     <li>@animals[i + j].Gender</li>
                                     <li>@animals[i + j].Age</li>
                                 </ul>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                                <a href="/Animal/Visit/@animals[i+j].Id">Visit @animals[i + j].Name!</a>
                             </div>
                         </div>
                     </div>

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HumaneCore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190725180004_Moved AdoptionFee from Animal to Species")]
-    partial class MovedAdoptionFeefromAnimaltoSpecies
+    [Migration("20190728034710_Trying to get migration to build correct bridge tables between entities")]
+    partial class Tryingtogetmigrationtobuildcorrectbridgetablesbetweenentities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,8 +23,9 @@ namespace HumaneCore.Data.Migrations
 
             modelBuilder.Entity("HumaneCore.Data.Models.Animal", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Age");
 
@@ -38,8 +39,6 @@ namespace HumaneCore.Data.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("RestrictionId");
-
                     b.Property<bool>("SpayedNeutered");
 
                     b.Property<int?>("SpeciesId");
@@ -47,8 +46,6 @@ namespace HumaneCore.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ColorId");
-
-                    b.HasIndex("RestrictionId");
 
                     b.HasIndex("SpeciesId");
 
@@ -63,7 +60,11 @@ namespace HumaneCore.Data.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int?>("SpeciesId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("SpeciesId");
 
                     b.ToTable("Breeds");
                 });
@@ -87,7 +88,7 @@ namespace HumaneCore.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<Guid?>("AnimalId");
+                    b.Property<long?>("AnimalId");
 
                     b.Property<string>("Location");
 
@@ -121,9 +122,13 @@ namespace HumaneCore.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<long?>("AnimalId");
+
                     b.Property<string>("Description");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AnimalId");
 
                     b.ToTable("Restrictions");
                 });
@@ -136,13 +141,9 @@ namespace HumaneCore.Data.Migrations
 
                     b.Property<double>("AdoptionFee");
 
-                    b.Property<int?>("BreedId");
-
                     b.Property<string>("CommonName");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BreedId");
 
                     b.ToTable("Species");
                 });
@@ -318,12 +319,15 @@ namespace HumaneCore.Data.Migrations
                         .WithMany()
                         .HasForeignKey("ColorId");
 
-                    b.HasOne("HumaneCore.Data.Models.Restriction", "Restriction")
-                        .WithMany()
-                        .HasForeignKey("RestrictionId");
-
                     b.HasOne("HumaneCore.Data.Models.Species", "Species")
                         .WithMany("Animals")
+                        .HasForeignKey("SpeciesId");
+                });
+
+            modelBuilder.Entity("HumaneCore.Data.Models.Breed", b =>
+                {
+                    b.HasOne("HumaneCore.Data.Models.Species")
+                        .WithMany("Breeds")
                         .HasForeignKey("SpeciesId");
                 });
 
@@ -338,11 +342,11 @@ namespace HumaneCore.Data.Migrations
                         .HasForeignKey("MediaTypeId");
                 });
 
-            modelBuilder.Entity("HumaneCore.Data.Models.Species", b =>
+            modelBuilder.Entity("HumaneCore.Data.Models.Restriction", b =>
                 {
-                    b.HasOne("HumaneCore.Data.Models.Breed", "Breed")
-                        .WithMany()
-                        .HasForeignKey("BreedId");
+                    b.HasOne("HumaneCore.Data.Models.Animal")
+                        .WithMany("Restrictions")
+                        .HasForeignKey("AnimalId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

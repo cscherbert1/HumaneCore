@@ -23,5 +23,12 @@ namespace HumaneCore.Data
         public DbSet<MediaType> MediaTypes { get; set; }
         public DbSet<Restriction> Restrictions { get; set; }
         public DbSet<Species> Species { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<AnimalRestriction>().
+                HasKey(r => new { r.AnimalId, r.RestrictionId });
+        }
     }
 }

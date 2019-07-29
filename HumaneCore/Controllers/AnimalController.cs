@@ -29,7 +29,7 @@ namespace HumaneCore.Controllers
                     Gender = animal.Gender,
                     Species = animal.Species,
                     Color = animal.Color,
-                    Restriction = animal.Restriction,
+                    AnimalRestrictions = animal.AnimalRestrictions,
                     Media = animal.Media
                 });
             var model = new AnimalIndexViewModel
@@ -37,6 +37,14 @@ namespace HumaneCore.Controllers
                 AnimalList = animals
             };
             return View(model);
+        }
+
+        public IActionResult Visit(long id)
+        {
+            //Animal animal = _animalService.GetById(id);
+            throw new NotImplementedException();
+            
+
         }
     }
 }

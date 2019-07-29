@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HumaneCore.Data.Migrations
 {
-    public partial class AddinitialEntitymodels : Migration
+    public partial class RedefinedIdofAnimaltolongfromGuidRecreatingdatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,19 +48,6 @@ namespace HumaneCore.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Breeds",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Breeds", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Colors",
                 columns: table => new
                 {
@@ -97,6 +84,20 @@ namespace HumaneCore.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Restrictions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Species",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CommonName = table.Column<string>(nullable: true),
+                    AdoptionFee = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Species", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -206,35 +207,15 @@ namespace HumaneCore.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Species",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CommonName = table.Column<string>(nullable: true),
-                    BreedId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Species", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Species_Breeds_BreedId",
-                        column: x => x.BreedId,
-                        principalTable: "Breeds",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Animals",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     Age = table.Column<int>(nullable: false),
                     Gender = table.Column<string>(nullable: true),
                     IntakeDate = table.Column<DateTime>(nullable: false),
-                    AdoptionFee = table.Column<double>(nullable: false),
                     Bio = table.Column<string>(nullable: true),
                     SpayedNeutered = table.Column<bool>(nullable: false),
                     SpeciesId = table.Column<int>(nullable: true),
@@ -265,6 +246,26 @@ namespace HumaneCore.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Breeds",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    SpeciesId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Breeds", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Breeds_Species_SpeciesId",
+                        column: x => x.SpeciesId,
+                        principalTable: "Species",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Media",
                 columns: table => new
                 {
@@ -272,7 +273,7 @@ namespace HumaneCore.Data.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Location = table.Column<string>(nullable: true),
                     MediaTypeId = table.Column<int>(nullable: true),
-                    AnimalId = table.Column<Guid>(nullable: true)
+                    AnimalId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -346,6 +347,11 @@ namespace HumaneCore.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Breeds_SpeciesId",
+                table: "Breeds",
+                column: "SpeciesId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Media_AnimalId",
                 table: "Media",
                 column: "AnimalId");
@@ -354,11 +360,6 @@ namespace HumaneCore.Data.Migrations
                 name: "IX_Media_MediaTypeId",
                 table: "Media",
                 column: "MediaTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Species_BreedId",
-                table: "Species",
-                column: "BreedId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -377,6 +378,9 @@ namespace HumaneCore.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Breeds");
 
             migrationBuilder.DropTable(
                 name: "Media");
@@ -401,9 +405,6 @@ namespace HumaneCore.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Species");
-
-            migrationBuilder.DropTable(
-                name: "Breeds");
         }
     }
 }

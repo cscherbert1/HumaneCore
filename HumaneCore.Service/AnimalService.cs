@@ -28,8 +28,8 @@ namespace HumaneCore.Service
         public IEnumerable<Animal> GetAll()
         {
             return _context.Animals
-                .Include(a => a.Species).ThenInclude(a => a.Breed)
-                .Include(a => a.Restriction)
+                .Include(a => a.Species).ThenInclude(a => a.Breeds)
+                .Include(a => a.AnimalRestrictions)
                 .Include(a => a.Color);
         }
 

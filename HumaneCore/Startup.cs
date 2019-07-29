@@ -32,7 +32,9 @@ namespace HumaneCore
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddRouting();
             services.AddScoped<IAnimal, AnimalService>();
+
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(

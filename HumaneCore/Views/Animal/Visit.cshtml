@@ -85,6 +85,7 @@
     </div>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { Id = Model.Id }) |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">All Animals</a> |
+    <a asp-action="Species" asp-route-Id="1">Cats</a> |
+    <a asp-action="Species" asp-route-Id="2">Dogs</a>
 </div>

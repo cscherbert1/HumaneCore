@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HumaneCore.Data.Interfaces;
 using HumaneCore.Data.Models;
+using HumaneCore.Models;
 using HumaneCore.Models.Animal;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,9 +43,11 @@ namespace HumaneCore.Controllers
             return View(model);
         }
 
-        public IActionResult Species(int speciesId)
+        public IActionResult Species(int Id)
         {
-            IEnumerable<AnimalListingViewModel> animals = _animalService.GetBySpecies(speciesId)
+            try
+            {
+                IEnumerable<AnimalListingViewModel> animals = _animalService.GetBySpecies(Id)
                 .Select(animal => new AnimalListingViewModel
                 {
                     Id = animal.Id,
@@ -57,13 +60,20 @@ namespace HumaneCore.Controllers
                     AnimalRestrictions = animal.AnimalRestrictions,
                     Media = animal.Media
                 });
-            var species = _speciesService.GetById(speciesId);
-            var model = new AnimalSpeciesViewModel
+                var species = _speciesService.GetById(Id);
+                var model = new AnimalSpeciesViewModel
+                {
+                    Species = species,
+                    AnimalList = animals
+                };
+                return View(model);
+            } catch(Exception ex)
             {
-                Species = species,
-                AnimalList = animals
-            };
-            return View(model);
+                ErrorViewModel error = new ErrorViewModel();
+                error.Message = ex.Message;
+                return RedirectToAction("Error", "Home", error);
+            }
+            
         }
 
         public IActionResult Visit(long id)

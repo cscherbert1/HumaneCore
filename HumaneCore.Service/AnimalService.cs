@@ -28,25 +28,45 @@ namespace HumaneCore.Service
 
         public IEnumerable<Animal> GetAll()
         {
-            return _context.Animals
+            try
+            {
+                return _context.Animals
                 .Include(a => a.Species).ThenInclude(a => a.Breeds)
                 .Include(a => a.AnimalRestrictions)
                 .Include(a => a.Color);
+            } catch (Exception ex)
+            {
+                throw ex;
+            }   
         }
 
         public Animal GetById(long Id)
         {
-            return _context.Animals.Where(a => a.Id == Id)
+            try
+            {
+                return _context.Animals.Where(a => a.Id == Id)
                 .Include(a => a.Species).ThenInclude(a => a.Breeds)
                 .Include(a => a.AnimalRestrictions)
                 .Include(a => a.Color)
                 .Include(a => a.Media)
                 .FirstOrDefault();
+            } catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public IEnumerable<Animal> GetBySpecies(int speciesId)
         {
-            return _context.Species.Find(speciesId).Animals;
+            if (speciesId > 0)
+            {
+                return _context.Species.Find(speciesId).Animals;
+            }
+            else
+            {
+                Exception ex = new ArgumentException("Provided species Id must be greater than 0.");
+                throw ex;
+            }                 
         }
 
         public Task Update(Animal animal)

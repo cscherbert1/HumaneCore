@@ -14,16 +14,28 @@ namespace HumaneCore.Controllers
     {
         private readonly IAnimal _animalService;
         private readonly ISpecies _speciesService;
+        private readonly IBreed _breedService;
+        private readonly IColor _colorService;
+        private readonly IAnimalRestriction _animalRestrictionService;
 
-        public AnimalController(IAnimal animalService, ISpecies speciesService)
+        public AnimalController(IAnimal animalService, 
+            ISpecies speciesService, 
+            IBreed breedService, 
+            IColor colorService, 
+            IAnimalRestriction animalRestrictionService)
         {
             _animalService = animalService;
             _speciesService = speciesService;
+            _breedService = breedService;
+            _colorService = colorService;
+            _animalRestrictionService = animalRestrictionService;
         }
 
         public IActionResult Index()
         {
-            IEnumerable<AnimalListingViewModel> animals = _animalService.GetAll()
+            try
+            {
+                IEnumerable<AnimalListingViewModel> animals = _animalService.GetAll()
                 .Select(animal => new AnimalListingViewModel
                 {
                     Id = animal.Id,
@@ -36,11 +48,17 @@ namespace HumaneCore.Controllers
                     AnimalRestrictions = animal.AnimalRestrictions,
                     Media = animal.Media
                 });
-            var model = new AnimalIndexViewModel
+                var model = new AnimalIndexViewModel
+                {
+                    AnimalList = animals
+                };
+                return View(model);
+            } catch(Exception ex)
             {
-                AnimalList = animals
-            };
-            return View(model);
+                ErrorViewModel error = new ErrorViewModel();
+                error.Message = ex.Message;
+                return RedirectToAction("Error", "Home", error);
+            }   
         }
 
         public IActionResult Species(int Id)
@@ -78,8 +96,50 @@ namespace HumaneCore.Controllers
 
         public IActionResult Visit(long id)
         {
-            Animal animal = _animalService.GetById(id);
-            return View(BuildAnimalListing(animal));
+            try
+            {
+                Animal animal = _animalService.GetById(id);
+                return View(BuildAnimalListing(animal));
+            } catch(Exception ex)
+            {
+                ErrorViewModel error = new ErrorViewModel();
+                error.Message = ex.Message;
+                return RedirectToAction("Error", "Home", error);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Intake()
+        {
+            AnimalIntakeViewModel model = new AnimalIntakeViewModel();
+            try
+            {
+                model.SpeciesCollection = _speciesService.GetAll();
+                model.BreedCollection = _breedService.GetAll();
+                model.ColorCollection = _colorService.GetAll();
+                model.AnimalRestrictions = _animalRestrictionService.GetAll();
+            } catch(Exception ex){
+                ErrorViewModel error = new ErrorViewModel();
+                error.Message = ex.Message;
+                return RedirectToAction("Error", "Home", error);
+            }         
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Intake(AnimalIntakeViewModel animal)
+        {
+            try
+            {
+                //call animal service's create method to add a new animal to the database
+            } catch (Exception ex)
+            {
+                ErrorViewModel error = new ErrorViewModel();
+                error.Message = ex.Message;
+                return RedirectToAction("Error", "Home", error);
+            }
+            //on success redirect to Thank you/ sucess page
+            return View();
         }
 
         /// <summary>

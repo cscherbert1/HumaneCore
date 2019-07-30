@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace HumaneCore.Data.Interfaces
 {
-    public interface IBreed
+    public interface IAnimalRestriction
     {
-        Breed GetById(int Id);
-        IEnumerable<Breed> GetAll();
+        AnimalRestriction GetById(int AnimalId, int RestrictionId);
+        IEnumerable<AnimalRestriction> GetAll();
 
-        Task Add(Breed breed);
+        Task Add(AnimalRestriction animalRestriction);
         Task Delete(int Id);
-        Task UpdateName(int Id, string newName);
     }
 }

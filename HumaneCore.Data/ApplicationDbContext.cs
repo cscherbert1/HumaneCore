@@ -17,6 +17,7 @@ namespace HumaneCore.Data
 
         public DbSet<IdentityUser> ApplicationUsers { get; set; }
         public DbSet<Animal> Animals { get; set; }
+        public DbSet<AnimalRestriction> AnimalRestrictions { get; set; }
         public DbSet<Breed> Breeds { get; set; }
         public DbSet<Color> Colors { get; set; }
         public DbSet<Media> Media { get; set; }

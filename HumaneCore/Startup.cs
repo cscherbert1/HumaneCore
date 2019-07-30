@@ -38,6 +38,9 @@ namespace HumaneCore
             services.AddRouting();
             services.AddScoped<IAnimal, AnimalService>();
             services.AddScoped<ISpecies, SpeciesService>();
+            services.AddScoped<IBreed, BreedService>();
+            services.AddScoped<IColor, ColorService>();
+            services.AddScoped<IAnimalRestriction, AnimalRestrictionService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(

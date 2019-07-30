@@ -1,23 +1,21 @@
 ﻿using HumaneCore.Data;
 using HumaneCore.Data.Interfaces;
 using HumaneCore.Data.Models;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace HumaneCore.Service
 {
-    public class SpeciesService : ISpecies
+    public class ColorService : IColor
     {
         private readonly ApplicationDbContext _context;
-        public SpeciesService(ApplicationDbContext context)
+        public ColorService(ApplicationDbContext context)
         {
             _context = context;
         }
-        public Task Add(Species species)
+        public Task Add(Color color)
         {
             throw new NotImplementedException();
         }
@@ -27,32 +25,23 @@ namespace HumaneCore.Service
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Species> GetAll()
+        public IEnumerable<Color> GetAll()
         {
             try
             {
-                return _context.Species.Include(s => s.Breeds);
-            } catch (Exception ex)
+                return _context.Colors;
+            } catch(Exception ex)
             {
                 throw ex;
             }
-            
         }
 
-        public Species GetById(int Id)
-        {
-            return _context.Species.Where(s => s.Id == Id)
-                .Include(s => s.Breeds)
-                .Include(s => s.Animals)
-                .FirstOrDefault();
-        }
-
-        public Task UpdateAdoptionFee(int Id, double newAdoptionFee)
+        public Color GetById(int Id)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateCommonName(int Id, string newCommonName)
+        public Task UpdateName(int Id, string newName)
         {
             throw new NotImplementedException();
         }

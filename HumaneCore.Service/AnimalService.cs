@@ -69,7 +69,7 @@ namespace HumaneCore.Service
             }                 
         }
 
-        public Task Update(Animal animal)
+        public Task Update(Animal newAnimal)
         {
             throw new NotImplementedException();
         }

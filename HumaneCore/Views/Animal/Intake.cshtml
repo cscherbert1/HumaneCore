@@ -7,11 +7,10 @@
 <h1>Intake</h1>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Intake">
+    <div class="col-md-6">
+        <form asp-action="Intake" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
                 <input asp-for="Id" class="form-control" />
                 <span asp-validation-for="Id" class="text-danger"></span>
             </div>
@@ -27,17 +26,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Gender" class="control-label"></label>
-                <input asp-for="Gender" class="form-control" />
+                <select asp-for="Gender" asp-items="Model.GenderOptions" class="form-control"></select>
                 <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IntakeDate" class="control-label"></label>
-                <input asp-for="IntakeDate" class="form-control" />
-                <span asp-validation-for="IntakeDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Bio" class="control-label"></label>
-                <input asp-for="Bio" class="form-control" />
+                <textarea rows="5" asp-for="Bio" class="form-control"></textarea>
                 <span asp-validation-for="Bio" class="text-danger"></span>
             </div>
             <div class="form-group form-check">

@@ -1,6 +1,9 @@
 ﻿using HumaneCore.Data.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,6 +17,7 @@ namespace HumaneCore.Models.Animal
             this.AnimalRestrictions = new HashSet<AnimalRestriction>();
             this.Media = new HashSet<Media>();
         }
+        [HiddenInput]
         public long Id { get; set; }
         [Required]
         public string Name { get; set; }
@@ -21,9 +25,16 @@ namespace HumaneCore.Models.Animal
         public int Age { get; set; }
         [Required]
         public string Gender { get; set; }
+        public List<SelectListItem> GenderOptions { get; } = new List<SelectListItem>
+        {
+            new SelectListItem { Value = "", Text = "Select a Gender" },
+            new SelectListItem { Value = "Male", Text = "Male" },
+            new SelectListItem { Value = "Female", Text = "Female" }
+        };
         public DateTime IntakeDate { get; set; }
         public string Bio { get; set; }
         [Required]
+        [DisplayName("Spayed or Neutered")]
         public bool SpayedNeutered { get; set; }
 
         [Required]
